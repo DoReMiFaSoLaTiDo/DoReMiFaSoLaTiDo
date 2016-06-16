@@ -15,8 +15,9 @@ class Album < ActiveRecord::Base
   end
 
   def self.most_recent
-    mr = last(4)
+    mr = Album.last(4)
     set('most_recent',mr)
+    mr
   end
 
   def self.set(key, value)
