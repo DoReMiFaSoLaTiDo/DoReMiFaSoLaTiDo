@@ -7,9 +7,25 @@ class Album < ActiveRecord::Base
   validates :released_on, presence: true, format: { with: /\A\d{4}-\d{2}-\d{2}\z/, message: "should be in the format YYYY-MM-DD" }
 
   validates :publisher, presence: true
-  
+
+  @@datastore = Hash.new([])
+
   def self.recent(n)
     where("Album.created_at < ?", 4.months.ago ).limit(n)
   end
+
+  def self.most_recent
+    mr = last(4)
+    set('most_recent',mr)
+  end
+
+  def self.set(key, value)
+    @@datastore[key] = value
+  end
+
+  def self.get(key)
+    @@datastore[key] || most_recent
+  end
+
 
 end

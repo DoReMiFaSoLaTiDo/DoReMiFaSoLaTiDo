@@ -24,7 +24,14 @@ class AlbumsController < ApplicationController
 
   def create
     @album = Album.new(album_params)
-    @album.save
+    if @album.save
+      most_recent = Album.get('most_recent')
+      if most_recent.size < 4
+        most_recent << @album
+      else
+        most_recent.shift.push(@album)
+
+      Album.set('most_recent', most_recent)
     respond_with(@album)
   end
 

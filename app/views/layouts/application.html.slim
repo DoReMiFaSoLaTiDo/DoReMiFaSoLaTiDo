@@ -50,7 +50,8 @@ html lang="en"
           .col-md-2
             ul
               li LATEST
-              li ~
+              @albums.each do |album|
+                li= album.name
           .col-md-2
             ul
               li OUR TEAM
