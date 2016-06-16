@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   resources :artists
   resources :songs
-  resources :albums
+  resources :albums do
+    get :newest
+  end
   resources :publishers
-  
+
   root 'publishers#index'
 
   # Example of regular route:
