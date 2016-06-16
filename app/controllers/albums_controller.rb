@@ -1,6 +1,8 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
 
+  before_action :get_publishers, only: [:new, :edit]
+
   respond_to :html
 
   def index
@@ -48,5 +50,9 @@ class AlbumsController < ApplicationController
 
     def album_params
       params.require(:album).permit(:name, :cover_art, :publisher_id, :released_on)
+    end
+
+    def get_publishers
+      @publishers = Publisher.all
     end
 end
