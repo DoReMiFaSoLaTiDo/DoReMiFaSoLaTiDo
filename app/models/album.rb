@@ -10,14 +10,8 @@ class Album < ActiveRecord::Base
 
   @@datastore = Hash.new()
 
-  scope :recent, -> (num_albums) { where("created_at > ?", 4.month.ago) }
+ scope :recent, -> (num_albums) { order(created_at: :desc).where("created_at > ?", 4.month.ago).limit(num_albums) }
 
-  class << self
-    def recent(n)
-      order(created_at: :asc).where(:created_at < 4.month.ago).limit(n)
-    end
-
-  end
 
   def self.most_recent
     mr = Album.order(created_at: :asc).reverse_order.limit(4).reverse
@@ -31,7 +25,7 @@ class Album < ActiveRecord::Base
 
   def self.get(key)
     @@datastore[key] ||= Album.most_recent
-    #raise @@datastore[key].inspect
+    
   end
 
 
