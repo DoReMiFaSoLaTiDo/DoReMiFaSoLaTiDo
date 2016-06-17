@@ -17,7 +17,6 @@ class Album < ActiveRecord::Base
       order(created_at: :asc).where(:created_at < 4.month.ago).limit(n)
     end
 
-    
   end
 
   def self.most_recent
