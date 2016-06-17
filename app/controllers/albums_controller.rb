@@ -30,8 +30,10 @@ class AlbumsController < ApplicationController
         most_recent << @album
       else
         most_recent.shift.push(@album)
-
+      end
       Album.set('most_recent', most_recent)
+    end
+
     respond_with(@album)
   end
 
@@ -45,9 +47,9 @@ class AlbumsController < ApplicationController
     respond_with(@album)
   end
 
-  def newest_album
-    @album = Album(:created_at).last
-    respond_with(@album) #redirect_to :show
+  def newest
+    @album = Album.last
+    render 'show'
   end
 
   private
@@ -62,4 +64,5 @@ class AlbumsController < ApplicationController
     def get_publishers
       @publishers = Publisher.all
     end
+
 end

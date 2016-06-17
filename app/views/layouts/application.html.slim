@@ -27,7 +27,7 @@ html lang="en"
           ul.nav.navbar-nav
             li= link_to "Publishers", publishers_path
             li= link_to "Albums", albums_path
-            li= link_to "Newest Album", newest_album_path
+            li= link_to "Newest Album", album_newest_path
             li= link_to "Artists", artists_path
 
 
@@ -50,7 +50,7 @@ html lang="en"
           .col-md-2
             ul
               li LATEST
-              @albums.each do |album|
+              = Album.get('most_recent').each do |album|
                 li= album.name
           .col-md-2
             ul
