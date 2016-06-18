@@ -24,3 +24,6 @@ dl.dl-horizontal
   - @artist.albums.each do |album|
     dt= link_to album.name, album
     dd= album.released_on
+
+= content_for :sidebar
+  img.img-thumbnail(src=@artist.image_url)

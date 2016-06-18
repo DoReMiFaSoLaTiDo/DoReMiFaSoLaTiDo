@@ -3,13 +3,10 @@
     .pull-right
       = link_to "New", new_artist_path, class: 'btn btn-primary'
     | Artists
-  
-table.table.table-striped
-  thead
-    tr
-      th name
-  tbody
-    - @artists.each do |artist|
-      tr
-        td= link_to artist.name, artist
 
+    .container-fluid
+
+        - @artists.each do |artist|
+          .col-md-2
+            = link_to artist do
+             img(src=artist.image_url style="width:150px" onClick="check_this('#{artist.image_url}','#{artist.name}', #{artist.id});" class="myphoto", title=artist.name)
