@@ -1,13 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: OneString
   cover_art: MyString
   publisher: one
   released_on: 2016-01-21
 
 two:
-  name: MyString
+  name: TwoString
   cover_art: MyString
   publisher: two
-  released_on: 2016-01-21
+  released_on: 2016-02-21
+
+three:
+  name: ThreeString
+  cover_art: MyString
+  publisher: one
+  released_on: 2016-03-16
+
+four:
+  name: FourString
+  cover_art: MyString
+  publisher: two
+  released_on: 2016-04-16
+
+five:
+  name: FiveString
+  cover_art: MyString
+  publisher: two
+  released_on: 2016-05-16

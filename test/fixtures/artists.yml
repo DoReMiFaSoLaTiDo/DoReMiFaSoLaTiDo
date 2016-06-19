@@ -2,6 +2,8 @@
 
 one:
   name: MyString
+  image:
 
 two:
   name: MyString
+  image:

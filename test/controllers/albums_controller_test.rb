@@ -1,8 +1,10 @@
 require 'test_helper'
 
 class AlbumsControllerTest < ActionController::TestCase
+
   setup do
     @album = albums(:one)
+    @albums = Album.all
   end
 
   test "should get index" do
@@ -25,12 +27,13 @@ class AlbumsControllerTest < ActionController::TestCase
   end
 
   test "should show album" do
-    get :show, id: @album
+    get :show, id: @album.id
     assert_response :success
+    # assert_redirected_to album_path(assigns(:album))
   end
 
   test "should get edit" do
-    get :edit, id: @album
+    get :edit, id: @album.id
     assert_response :success
   end
 
@@ -39,6 +42,12 @@ class AlbumsControllerTest < ActionController::TestCase
     assert_redirected_to album_path(assigns(:album))
   end
 
+  test "should get newest album" do
+    get :newest
+    assert_response :success
+  end
+
+
   # TODO album destroy tests
-  
+
 end

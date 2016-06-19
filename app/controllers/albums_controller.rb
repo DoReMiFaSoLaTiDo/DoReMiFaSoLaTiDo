@@ -3,10 +3,10 @@ class AlbumsController < ApplicationController
 
   before_action :get_publishers, only: [:new, :edit]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
-    @albums = Album.all
+    @albums = Album.joins(:publisher).select("albums.id, albums.name, albums.cover_art, albums.released_on, publishers.name as owner")
     respond_with(@albums)
   end
 
@@ -25,20 +25,46 @@ class AlbumsController < ApplicationController
   def create
     @album = Album.new(album_params)
     if @album.save
-      most_recent = Album.get('most_recent')
-      if most_recent.size < 4
-        most_recent << @album
+      if Album.get(:most_recent).size < 4
+        Album.set(:most_recent, Album.get(:most_recent).to_a.push(@album) )
       else
-        most_recent.shift.push(@album)
-      end
-      Album.set('most_recent', most_recent)
-    end
+        new_store = []
+        Album.get(:most_recent).to_a.each do |album|
+          new_store << album unless Date.strptime(album.released_on, '%Y-%m-%d') > Date.strptime(@album.released_on, '%Y-%m-%d')
+        end
 
+        if new_store.size < 4
+          new_store.push(obj)
+        end
+        Album.set(:most_recent, new_store)
+      end
+    end
     respond_with(@album)
   end
 
   def update
-    @album.update(album_params)
+    if @album.update(album_params)
+      old_store = Album.get(:most_recent)
+      if old_store.size < 4
+        old_store.to_a.each_with_index do |album, ind|
+          if @album.id == album.id
+            old_store.delete_at(ind)
+            old_store.push(@album).sort_by &:released_on
+          end
+        end
+        Album.set(:most_recent, old_store )
+      else
+        new_store = []
+        Album.get(:most_recent).to_a.each do |album|
+          new_store << album unless Date.strptime(album.released_on, '%Y-%m-%d') > Date.strptime(@album.released_on, '%Y-%m-%d')
+        end
+
+        if new_store.size < 4
+          new_store.push(@album)
+        end
+        Album.set(:most_recent, new_store)
+      end
+    end
     respond_with(@album)
   end
 
@@ -48,7 +74,7 @@ class AlbumsController < ApplicationController
   end
 
   def newest
-    @album = Album.last
+    @album = Album.most_recent(1).first
     render 'show'
   end
 

@@ -8,8 +8,10 @@ class Artist < ActiveRecord::Base
     image ? image : request_image
   end
 
-  def request_image
-    '/art/01-13264.jpg'
-  end
-  
+  private
+
+    def request_image
+      '/art/01-13264.jpg'
+    end
+
 end

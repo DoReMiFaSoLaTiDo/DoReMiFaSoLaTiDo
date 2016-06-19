@@ -9,15 +9,15 @@ class Album < ActiveRecord::Base
   validates :publisher, presence: true
 
   @@datastore = Hash.new()
+  @@datastore[:most_recent] = []
 
- scope :recent, -> (num_albums) { order(created_at: :desc).where("created_at > ?", 4.month.ago).limit(num_albums) }
+ scope :recent, -> (num_albums) { order(released_on: :desc).where("released_on > ?", 4.month.ago).limit(num_albums) }
 
 
-  def self.most_recent
-    mr = Album.order(created_at: :asc).reverse_order.limit(4).reverse
-    set('most_recent',mr)
-    mr
+  def self.most_recent(num_albums=4)
+    order(released_on: :asc).reverse_order.limit(num_albums).reverse
   end
+
 
   def self.set(key, value)
     @@datastore[key] = value
@@ -25,8 +25,6 @@ class Album < ActiveRecord::Base
 
   def self.get(key)
     @@datastore[key] ||= Album.most_recent
-    
   end
-
 
 end

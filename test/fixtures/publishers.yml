@@ -4,16 +4,16 @@ one:
   name: MyString
   address: MyString
   city: MyString
-  state: MyString
-  zip: MyString
-  phone: MyString
-  url: MyString
+  state: NY
+  zip: 11111
+  phone: 410-921-7863
+  url: http://www.antonio.com
 
 two:
-  name: MyString
+  name: MyString2
   address: MyString
   city: MyString
-  state: MyString
-  zip: MyString
-  phone: MyString
-  url: MyString
+  state: TX
+  zip: 22222
+  phone: 217-335-8954
+  url: http://www.alamo.com

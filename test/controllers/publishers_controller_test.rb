@@ -17,6 +17,7 @@ class PublishersControllerTest < ActionController::TestCase
   end
 
   test "should create publisher" do
+    @publisher.name = 'Joe Pablo'
     assert_difference('Publisher.count') do
       post :create, publisher: { address: @publisher.address, city: @publisher.city, name: @publisher.name, phone: @publisher.phone, state: @publisher.state, url: @publisher.url, zip: @publisher.zip }
     end
