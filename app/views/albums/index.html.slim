@@ -14,5 +14,5 @@ table.table.table-striped
     - @albums.each do |album|
       tr
         td= link_to album.name, album
-        td= album.publisher.name
+        td= album.owner
         td= album.released_on
